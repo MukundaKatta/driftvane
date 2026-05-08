@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "driftvane"
+version = "0.1.0"
+description = "Compose drift detectors (embedding, retrieval, response, latency) into one report. Library-only, no server, no UI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mukunda Rao Katta", email = "mukunda.vjcs6@gmail.com" }]
+keywords = [
+  "ai",
+  "llm",
+  "rag",
+  "agents",
+  "drift",
+  "embedding-drift",
+  "retrieval-drift",
+  "monitoring",
+  "evals",
+  "mlops",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+pandas = ["pandas>=2.0"]
+external-response = ["context-drift-detector-py>=0.1"]
+dev = ["pytest>=8.0", "pandas>=2.0", "ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/MukundaKatta/driftvane"
+Issues = "https://github.com/MukundaKatta/driftvane/issues"
+Source = "https://github.com/MukundaKatta/driftvane"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/driftvane"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
