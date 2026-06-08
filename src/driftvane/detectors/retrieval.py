@@ -54,11 +54,11 @@ def _rbo(ref: Sequence[Any], cur: Sequence[Any], p: float = 0.9) -> float:
 class RetrievalDrift:
     """Detect retrieval drift across paired query→top-k results.
 
-        rd = RetrievalDrift(k=10, threshold=0.3)
-        signal = rd.compute(
-            reference=[["doc_1", "doc_2", ...], ...],
-            current=[["doc_1", "doc_3", ...], ...],
-        )
+    rd = RetrievalDrift(k=10, threshold=0.3)
+    signal = rd.compute(
+        reference=[["doc_1", "doc_2", ...], ...],
+        current=[["doc_1", "doc_3", ...], ...],
+    )
     """
 
     def __init__(

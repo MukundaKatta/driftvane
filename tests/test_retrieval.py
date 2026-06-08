@@ -58,3 +58,13 @@ def test_rbo_weights_top_positions_more():
     sig = RetrievalDrift(k=5).compute(ref, cur)
     assert sig.metadata["mean_jaccard_at_k"] == 1.0
     assert sig.metadata["mean_rbo"] < 1.0
+
+
+def test_only_top_k_considered():
+    # Lists agree on the top 2 but diverge below k=2; truncation hides the tail.
+    ref = [["a", "b", "c", "d"]]
+    cur = [["a", "b", "x", "y"]]
+    sig = RetrievalDrift(k=2).compute(ref, cur)
+    assert sig.value == 0.0
+    assert sig.metadata["mean_jaccard_at_k"] == 1.0
+    assert sig.metadata["k"] == 2

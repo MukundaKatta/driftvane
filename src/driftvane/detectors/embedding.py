@@ -65,8 +65,8 @@ def mmd_rbf(x: np.ndarray, y: np.ndarray, sigma: float | None = None) -> tuple[f
 class EmbeddingDrift:
     """Detect distribution shift between two batches of embedding vectors.
 
-        ed = EmbeddingDrift(threshold=0.1)
-        signal = ed.compute(reference=ref_emb, current=cur_emb)
+    ed = EmbeddingDrift(threshold=0.1)
+    signal = ed.compute(reference=ref_emb, current=cur_emb)
     """
 
     def __init__(

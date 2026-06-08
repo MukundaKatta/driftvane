@@ -34,12 +34,16 @@ def test_from_signals():
 
 
 def test_to_pandas_includes_metadata_columns():
-    r = DriftReport().add(
-        DriftSignal(name="x", value=0.5, metadata={"sigma": 1.5, "n": 100})
-    )
+    r = DriftReport().add(DriftSignal(name="x", value=0.5, metadata={"sigma": 1.5, "n": 100}))
     df = r.to_pandas()
     assert list(df.columns) == ["name", "value", "threshold", "drifted", "meta_sigma", "meta_n"]
     assert df.iloc[0]["meta_sigma"] == 1.5
+
+
+def test_to_pandas_empty_report_has_base_columns():
+    df = DriftReport().to_pandas()
+    assert list(df.columns) == ["name", "value", "threshold", "drifted"]
+    assert len(df) == 0
 
 
 def test_alert_if_raises_on_breach():

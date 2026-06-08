@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from driftvane import EmbeddingDrift
+from driftvane.detectors.embedding import mmd_rbf
 
 
 def _gen(n: int, dim: int, mean: float = 0.0, scale: float = 1.0, seed: int = 0):
@@ -71,3 +72,19 @@ def test_value_is_non_negative():
     b = _gen(200, 16, seed=1)
     sig = EmbeddingDrift().compute(a, b)
     assert sig.value >= 0.0
+
+
+def test_mmd_rbf_returns_sigma_used():
+    a = _gen(50, 8, seed=1)
+    b = _gen(50, 8, seed=2)
+    mmd2, sigma = mmd_rbf(a, b)
+    assert mmd2 >= 0.0
+    # median heuristic should pick a positive bandwidth
+    assert sigma > 0.0
+
+
+def test_mmd_rbf_respects_explicit_sigma():
+    a = _gen(50, 8, seed=1)
+    b = _gen(50, 8, seed=2)
+    _, sigma = mmd_rbf(a, b, sigma=3.0)
+    assert sigma == 3.0
